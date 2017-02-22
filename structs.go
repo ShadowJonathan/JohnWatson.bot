@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	"JohnWatson.bot/versions"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -11,8 +12,8 @@ type Bot struct {
 	SelfUser          *discordgo.User
 	SherlockAuthlevel int // 0: all data, 1: only chat, 2: only changes, 3: none
 	Sherlocks         []*Sherlock
-	Version           [4]int //major, minor, build, experimental
-	Owner *discordgo.User
+	Version           versions.Version //major, minor, build, experimental
+	Owner             *discordgo.User
 }
 
 type Sherlock struct {
@@ -23,7 +24,7 @@ type Sherlock struct {
 	Autodetected bool // is this bot seen by the avatar recognition, yes/no
 	Owner        *discordgo.User
 	Protocol     string
-	Version      [4]int
+	Version      versions.Version
 }
 
 type settings struct {

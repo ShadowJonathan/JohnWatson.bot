@@ -3,8 +3,8 @@ package main
 import (
 	"image"
 	"image/color"
-	"os"
 	"image/png"
+	"os"
 )
 
 func Encodefile(file, dest string) {
@@ -28,10 +28,8 @@ type encodedimage struct {
 }
 
 func (m *encodedimage) At(x, y int) color.Color {
-	// "Changed" part: custom colors for specific coordinates:
 	if x <= 5 && y <= 5 {
 		return color.RGBA{255, 255, 255, 255}
 	}
-	// "Unchanged" part: the colors of the original image:
 	return m.Image.At(x, y)
 }

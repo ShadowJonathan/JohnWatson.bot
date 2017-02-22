@@ -18,6 +18,6 @@ func main() {
 	John = &Bot{
 		SherlockAuthlevel: sett.Authlevel,
 		Version:           version,
-		Owner: sett.Owner,
+		Owner:             sett.Owner,
 	}
 }
