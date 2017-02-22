@@ -15,7 +15,7 @@ func GetSHVersion(img image.Image) Version {
 			ai++
 		}
 	}
-	for ver, col := range versions {
+	for ver, col := range Vers {
 		if colorarray == col {
 			return ver
 		}

@@ -1,7 +1,14 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"fmt"
+)
 
 func TestEncodefile2(t *testing.T) {
-	Encodefile("Sherlock.jpg", "Encoded.png")
+	EncodefileBasic("Sherlock.jpg", "Encoded.png")
+}
+
+func TestDecodeFile(t *testing.T) {
+	fmt.Println(DecodeFile("versions/result.png"))
 }

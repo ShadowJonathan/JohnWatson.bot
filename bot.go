@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+	"JohnWatson.bot/versions"
 )
 
-var version = [4]int{0, 0, 1, 0}
+var version = versions.Version{0,0,1,0}
 
 var John *Bot
 
