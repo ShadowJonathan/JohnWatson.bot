@@ -16,10 +16,29 @@ func GetSHVersion(img image.Image) Version {
 		}
 	}
 	for ver, col := range Vers {
-		if colorarray == col {
+		var ye bool
+		ye = true
+		for i, c := range col {
+			if compcolor(colorarray[i], c) {
+				continue
+			} else {
+				ye = false
+			}
+		}
+		if ye {
 			return ver
 		}
 	}
 	// failed, return nil Version
 	return Version{0, 0, 0, 0}
+}
+
+func compcolor(col1, col2 color.Color) bool {
+	r1, b1, g1, a1 := col1.RGBA()
+	r2, b2, g2, a2 := col2.RGBA()
+	if r1 == r2 && b1 == b2 && g1 == g2 && a1 == a2 {
+		return true
+	} else {
+		return false
+	}
 }

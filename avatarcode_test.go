@@ -1,8 +1,9 @@
 package main
 
 import (
-	"testing"
+	"JohnWatson.bot/versions"
 	"fmt"
+	"testing"
 )
 
 func TestEncodefile2(t *testing.T) {
@@ -10,5 +11,10 @@ func TestEncodefile2(t *testing.T) {
 }
 
 func TestDecodeFile(t *testing.T) {
-	fmt.Println(DecodeFile("versions/result.png"))
+	ver := DecodeFile("SH.png")
+	fmt.Println(ver)
+}
+
+func TestEncodefileVersion(t *testing.T) {
+	EncodefileVersion("sherlock.jpg", "SH.png", versions.Version{0, 0, 2, 0})
 }

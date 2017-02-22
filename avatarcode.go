@@ -1,12 +1,11 @@
 package main
 
 import (
+	"JohnWatson.bot/versions"
 	"image"
 	"image/color"
 	"image/png"
 	"os"
-	"JohnWatson.bot/versions"
-	"fmt"
 )
 
 func EncodefileBasic(file, dest string) {
@@ -60,9 +59,9 @@ type versionencodedimage struct {
 
 func (m *versionencodedimage) At(x, y int) color.Color {
 	if x >= m.Bounds().Dx()-5 && y >= m.Bounds().Dy()-5 {
-		rx := x - (m.Bounds().Dx()-5)
-		ry := y - (m.Bounds().Dy()-5)
-		return versions.Vers[m.Ver][rx * 5 + ry]
+		rx := x - (m.Bounds().Dx() - 5)
+		ry := y - (m.Bounds().Dy() - 5)
+		return versions.Vers[m.Ver][rx*5+ry]
 	}
 	return m.Image.At(x, y)
 }
@@ -76,5 +75,6 @@ func DecodeFile(file string) versions.Version {
 }
 
 func Decode(img image.Image) versions.Version {
-	return versions.GetSHVersion(img)
+	ver := versions.GetSHVersion(img)
+	return ver
 }

@@ -1,12 +1,12 @@
 package main
 
 import (
+	"JohnWatson.bot/versions"
 	"encoding/json"
 	"io/ioutil"
-	"JohnWatson.bot/versions"
 )
 
-var version = versions.Version{0,0,1,0}
+var version = versions.Version{0, 0, 1, 0}
 
 var John *Bot
 
