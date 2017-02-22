@@ -2,3 +2,4 @@
 *.png
 Settings.json
 .idea/**
+.vscode/**
