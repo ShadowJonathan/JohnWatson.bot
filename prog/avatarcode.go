@@ -6,6 +6,7 @@ import (
 	"image/color"
 	"image/png"
 	"os"
+	"net/http"
 )
 
 func EncodefileBasic(file, dest string) {
@@ -77,4 +78,20 @@ func DecodeFile(file string) versions.Version {
 func Decode(img image.Image) versions.Version {
 	ver := versions.GetSHVersion(img)
 	return ver
+}
+
+func DecodeUrl(url string) (bool,versions.Version) {
+	resp, err := http.Get(url)
+	HE(err)
+	body := resp.Body
+	defer body.Close()
+	img, _,err := image.Decode(body)
+	HE(err)
+	ver := Decode(img)
+	nilver := versions.Version{}
+	if ver != nilver {
+		return true, ver
+	} else {
+		return false, ver
+	}
 }

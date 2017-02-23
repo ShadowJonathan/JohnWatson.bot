@@ -34,3 +34,9 @@ func TestPushVersion(t *testing.T) {
 	out, err := os.Create("Encoded.png")
 	png.Encode(out, img)
 }
+
+var localimage = "http://localhost:9001/SH.png"
+
+func TestDecodeUrl(t *testing.T) {
+	fmt.Println(DecodeUrl(localimage))
+}

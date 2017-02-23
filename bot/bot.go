@@ -1,10 +1,10 @@
 package main
 
 import (
-	"../prog"
 	"JohnWatson.bot/versions"
 	"encoding/json"
 	"io/ioutil"
+	"JohnWatson.bot/prog"
 )
 
 var version = versions.Version{0, 0, 1, 0}
