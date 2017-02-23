@@ -1,6 +1,7 @@
 package main
 
 import (
+	"../prog"
 	"JohnWatson.bot/versions"
 	"encoding/json"
 	"io/ioutil"
@@ -8,15 +9,15 @@ import (
 
 var version = versions.Version{0, 0, 1, 0}
 
-var John *Bot
+var John *prog.Bot
 
 func main() {
 	data, err := ioutil.ReadFile("Settings.json")
-	HE(err)
-	sett := &settings{}
+	prog.HE(err)
+	sett := &prog.Settings{}
 	err = json.Unmarshal(data, sett)
-	HE(err)
-	John = &Bot{
+	prog.HE(err)
+	John = &prog.Bot{
 		SherlockAuthlevel: sett.Authlevel,
 		Version:           version,
 		Owner:             sett.Owner,

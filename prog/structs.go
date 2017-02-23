@@ -1,4 +1,4 @@
-package main
+package prog
 
 import (
 	"time"
@@ -27,7 +27,7 @@ type Sherlock struct {
 	Version      versions.Version
 }
 
-type settings struct {
+type Settings struct {
 	Token     string          `json:"token"`
 	Authlevel int             `json:"Auth"`
 	Owner     *discordgo.User `json:",omitempty"`
