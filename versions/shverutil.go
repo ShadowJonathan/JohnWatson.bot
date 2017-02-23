@@ -15,30 +15,41 @@ func GetSHVersion(img image.Image) Version {
 			ai++
 		}
 	}
-	for ver, col := range Vers {
-		var ye bool
-		ye = true
-		for i, c := range col {
-			if compcolor(colorarray[i], c) {
-				continue
-			} else {
-				ye = false
-			}
-		}
-		if ye {
-			return ver
+	fail := Version{0, 0, 0, 0}
+	header := colorarray[:4]
+	Major := colorarray[4:9]
+	Minor := colorarray[9:14]
+	Build := colorarray[14:19]
+	Exper := colorarray[19:24]
+	for _, c := range header {
+		if c != white {
+			return fail
 		}
 	}
-	// failed, return nil Version
-	return Version{0, 0, 0, 0}
+	return Version{
+		convert(Major),
+		convert(Minor),
+		convert(Build),
+		convert(Exper),
+	}
 }
 
-func compcolor(col1, col2 color.Color) bool {
-	r1, b1, g1, a1 := col1.RGBA()
-	r2, b2, g2, a2 := col2.RGBA()
-	if r1 == r2 && b1 == b2 && g1 == g2 && a1 == a2 {
-		return true
-	} else {
-		return false
+func convert(c []color.Color) int {
+	if len(c) > 5 || len(c) < 5 {
+		panic(c)
 	}
+	var w int = 0
+	if c[4] == black {
+		w = w+1
+	}
+	if c[3] == black {
+		w = w+2
+	}
+	if c[2] == black {
+		w = w+4
+	}
+	if c[1] == black {
+		w = w+8
+	}
+	return w
 }

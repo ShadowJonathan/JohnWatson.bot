@@ -10,7 +10,7 @@ import (
 )
 
 func TestUtilWerks(t *testing.T) {
-	imgf, _ := os.Open("../Encoded.png")
+	imgf, _ := os.Open("SH.png")
 	img, err := png.Decode(imgf)
 	if err != nil {
 		panic(err)
@@ -34,6 +34,9 @@ type encodetest struct {
 
 func (e *encodetest) At(x, y int) color.Color {
 	if x >= e.Image.Bounds().Dx()-5 && y >= e.Image.Bounds().Dy()-5 {
+		if x - (e.Image.Bounds().Dx()-5) == 3 && y - (e.Image.Bounds().Dy()-5) == 4 {
+			return color.RGBA{0,0,0,255}
+		}
 		return color.RGBA{255, 255, 255, 255}
 	}
 	return e.Image.At(x, y)

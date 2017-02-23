@@ -62,7 +62,7 @@ func (m *versionencodedimage) At(x, y int) color.Color {
 	if x >= m.Bounds().Dx()-5 && y >= m.Bounds().Dy()-5 {
 		rx := x - (m.Bounds().Dx() - 5)
 		ry := y - (m.Bounds().Dy() - 5)
-		return versions.Vers[m.Ver][rx*5+ry]
+		return versions.GetVerPix(m.Ver,rx,ry)
 	}
 	return m.Image.At(x, y)
 }
