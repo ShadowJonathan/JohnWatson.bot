@@ -63,19 +63,57 @@ func toobig(source, im string) bool {
 	return ye
 }
 
-func downloadimg(url string) (bool, image.Image) {
+var DLlimit = 2000000
+
+func downloadimg(url string) (bool, image.Image, bool, int) {
 	res, err := download(url)
 	if err != nil {
-		return false, nil
+		return false, nil, false, 0
 	}
 	b := res.Body
 	defer b.Close()
 	img, _, err := image.Decode(b)
 	if err != nil {
-		return false, nil
+		return false, nil, false, 0
 	} else {
-		return true, img
+		ch, _ := download(url)
+		body, err := ioutil.ReadAll(ch.Body)
+		defer ch.Body.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+		l := len(body)
+		fmt.Println(l)
+		if l > DLlimit {
+			return true, img, false, l
+		} else {
+			return true, img, true, l
+		}
 	}
+}
+
+func handletoobig(m *discordgo.Message, l int) {
+	if l > 1 {
+		inform(m.ChannelID, "`The image that you gave me is too big!`\n`It's "+Getdatacount(int64(l))+", but it has to be lower than 2 MB!`")
+	} else {
+		inform(m.ChannelID, "`That link doesn't point to a valid download, please check the link, and if it has to be an image, please link the image directly.`")
+	}
+}
+
+func Getdatacount(i int64) string {
+	s := strconv.FormatInt(i, 10)
+	if i > 1000000 {
+		t := s[len(s)-6:]
+		h := s[:len(s)-6]
+		if t[1] == '0' {
+			return h + "." + t[:1] + " MB"
+		} else {
+			return h + "." + t[:2] + " MB"
+		}
+	} else {
+		return s + " KB"
+	}
+	return s
 }
 
 func download(url string) (*http.Response, error) {
@@ -232,7 +270,7 @@ func Clearance(i int, g string, people ...string) map[string]bool {
 	for _, p := range people {
 		cs, ok := cc[p]
 		if !ok {
-			c = 0
+			c = -1
 		} else {
 			c64, _ := strconv.ParseInt(cs, 10, 0)
 			c = int(c64)
@@ -248,17 +286,16 @@ func Clearance(i int, g string, people ...string) map[string]bool {
 		}
 
 	}
-	fmt.Println(ret)
 	return ret
 }
 
 func Clroles(p string, g string) int {
 	m, err := J.dg.GuildMember(g, p)
 	if err != nil {
-		return 0
+		return -1
 	}
 	r := m.Roles
-	var max int = 0
+	var max int = -1
 	for _, role := range r {
 		c, ok := J.Data["clear"][role]
 		if ok {
