@@ -1,12 +1,12 @@
 package prog
 
 import (
-	"JohnWatson.bot/versions"
+	"../versions"
 	"image"
 	"image/color"
 	"image/png"
-	"os"
 	"net/http"
+	"os"
 )
 
 func EncodefileBasic(file, dest string) {
@@ -62,7 +62,7 @@ func (m *versionencodedimage) At(x, y int) color.Color {
 	if x >= m.Bounds().Dx()-5 && y >= m.Bounds().Dy()-5 {
 		rx := x - (m.Bounds().Dx() - 5)
 		ry := y - (m.Bounds().Dy() - 5)
-		return versions.GetVerPix(m.Ver,rx,ry)
+		return versions.GetVerPix(m.Ver, rx, ry)
 	}
 	return m.Image.At(x, y)
 }
@@ -80,12 +80,12 @@ func Decode(img image.Image) versions.Version {
 	return ver
 }
 
-func DecodeUrl(url string) (bool,versions.Version) {
+func DecodeUrl(url string) (bool, versions.Version) {
 	resp, err := http.Get(url)
 	HE(err)
 	body := resp.Body
 	defer body.Close()
-	img, _,err := image.Decode(body)
+	img, _, err := image.Decode(body)
 	HE(err)
 	ver := Decode(img)
 	nilver := versions.Version{}

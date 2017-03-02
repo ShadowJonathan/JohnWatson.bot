@@ -3,7 +3,7 @@ package prog
 import (
 	"time"
 
-	"JohnWatson.bot/versions"
+	"../versions"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -14,6 +14,10 @@ type Bot struct {
 	Sherlocks         []*Sherlock
 	Version           versions.Version //major, minor, build, experimental
 	Owner             *discordgo.User
+	dg                *discordgo.Session
+	Data              map[string]map[string]string
+	Stop              bool
+	Restart           bool
 }
 
 type Sherlock struct {
@@ -28,7 +32,9 @@ type Sherlock struct {
 }
 
 type Settings struct {
-	Token     string          `json:"token"`
-	Authlevel int             `json:"Auth"`
-	Owner     *discordgo.User `json:",omitempty"`
+	Token     string                       `json:"token"`
+	Authlevel int                          `json:"Auth"`
+	Owner     *discordgo.User              `json:",omitempty"`
+	Data      map[string]map[string]string `json:"data,omitempty"`
+	Sherlocks []*Sherlock                  `json:",omitempty"`
 }

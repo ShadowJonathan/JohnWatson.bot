@@ -14,6 +14,17 @@ type Version struct {
 var white = color.RGBA{255, 255, 255, 255}
 var black = color.RGBA{0, 0, 0, 255}
 
+func WB(c color.Color) color.Color {
+	var half uint32 = 65535 / 2
+	r, g, b, _ := c.RGBA()
+	if r < half || g < half || b < half {
+		return black
+	} else if r > half || g > half || b > half {
+		return white
+	}
+	return color.RGBA{160, 160, 160, 160}
+}
+
 func GetVerPix(ver Version, x int, y int) color.Color {
 	go verify(ver)
 	if x == 0 || y == 0 {

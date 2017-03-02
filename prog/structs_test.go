@@ -2,11 +2,15 @@ package prog
 
 import (
 	"encoding/json"
-	"testing"
 	"io/ioutil"
+	"testing"
 )
 
 func TestJson(t *testing.T) {
-	data, _ := json.Marshal(&Settings{})
-	ioutil.WriteFile("Settings.json", data, 9001)
+	var s = &Settings{}
+	s.Data = make(map[string]map[string]string)
+	s.Data["clear"] = make(map[string]string)
+	s.Data["clear"]["132583718291243008"] = "4"
+	data, _ := json.Marshal(s)
+	ioutil.WriteFile("Settings.json", data, 0666)
 }

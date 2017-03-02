@@ -4,3 +4,5 @@ Settings.json
 .idea/**
 .vscode/**
 testfileserver/**
+*.DS_STORE
+*.botboot

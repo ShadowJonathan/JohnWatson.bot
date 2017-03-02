@@ -10,19 +10,19 @@ func GetSHVersion(img image.Image) Version {
 	var ai int
 	ai = 0
 	for i := img.Bounds().Dy() - 5; i < img.Bounds().Dy(); i++ {
-		for I := img.Bounds().Dy() - 5; I < img.Bounds().Dy(); I++ {
+		for I := img.Bounds().Dx() - 5; I < img.Bounds().Dx(); I++ {
 			colorarray[ai] = img.At(I, i)
 			ai++
 		}
 	}
 	fail := Version{0, 0, 0, 0}
-	header := colorarray[:4]
-	Major := colorarray[4:9]
-	Minor := colorarray[9:14]
-	Build := colorarray[14:19]
-	Exper := colorarray[19:24]
+	header := colorarray[:5]
+	Major := colorarray[5:10]
+	Minor := colorarray[10:15]
+	Build := colorarray[15:20]
+	Exper := colorarray[20:25]
 	for _, c := range header {
-		if c != white {
+		if (c != white) && (WB(c) != white) {
 			return fail
 		}
 	}
@@ -39,17 +39,36 @@ func convert(c []color.Color) int {
 		panic(c)
 	}
 	var w int = 0
-	if c[4] == black {
-		w = w+1
+	if c[4] == black || WB(c[4]) == black {
+		w = w + 1
 	}
-	if c[3] == black {
-		w = w+2
+	if c[3] == black || WB(c[3]) == black {
+		w = w + 2
 	}
-	if c[2] == black {
-		w = w+4
+	if c[2] == black || WB(c[2]) == black {
+		w = w + 4
 	}
-	if c[1] == black {
-		w = w+8
+	if c[1] == black || WB(c[1]) == black {
+		w = w + 8
 	}
 	return w
+}
+
+func Upperleftwhite(img image.Image) bool {
+	colorarray := [25]color.Color{}
+	var ai int
+	ai = 0
+	for i := 0; i < 5; i++ {
+		for I := 0; I < 5; I++ {
+			colorarray[ai] = img.At(I, i)
+			ai++
+		}
+	}
+
+	for _, c := range colorarray {
+		if (c != white) && (WB(c) != white) {
+			return false
+		}
+	}
+	return true
 }

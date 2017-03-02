@@ -1,7 +1,7 @@
 package prog
 
 import (
-	"JohnWatson.bot/versions"
+	"../versions"
 	"fmt"
 	"image"
 	"image/png"
@@ -22,7 +22,7 @@ func TestEncodefileVersion(t *testing.T) {
 }
 
 func TestDecodeFile(t *testing.T) {
-	ver := DecodeFile(this+"SH.png")
+	ver := DecodeFile(this + "SH.png")
 	fmt.Println(ver)
 }
 
@@ -44,19 +44,27 @@ func TestDecodeUrl(t *testing.T) {
 	fmt.Println(DecodeUrl(localimage))
 }
 
+func TestServer(t *testing.T) {
+	gfi := make(chan bool)
+	go Run(gfi)
+	_ = <-gfi
+	fmt.Println("Gottem")
+	_ = <-gfi
+}
+
 func TestVerPix(t *testing.T) {
-	ver := versions.Version{0,4,8,0}
-	for y := 0; y < 5;y++ {
+	ver := versions.Version{0, 4, 8, 0}
+	for y := 0; y < 5; y++ {
 		for x := 0; x < 5; x++ {
-			fmt.Println(versions.GetVerPix(ver,x,y))
+			fmt.Println(versions.GetVerPix(ver, x, y))
 		}
 	}
 }
 
-const here = "/Users/fokedejong-noorman/mygo/src/JohnWatson.bot/testfileserver/"
+const here = "/Users/fokedejong-noorman/shared/Bots/JohnWatson.bot/prog/"
 
-var localimage = "http://localhost:" + localport + "/SH.png"
-var localport = "9003"
+var localimage = "http://localhost:" + localport + "/SH3.jpg"
+var localport = "9999"
 
 var serverup bool
 
